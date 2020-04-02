@@ -28,7 +28,7 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $menu = Menu::create(['field' => $request->field]);
+        $menu = Menu::create($request->json()->all());
         $this->menuRepository->store($menu);
 
         return new JsonResponse($menu->toArray(), Response::HTTP_CREATED);

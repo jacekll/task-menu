@@ -24,7 +24,13 @@ class CreateMenuTest extends TestCase
     {
         $response = $this->json('POST', '/api/menus', ['field' => 'value']);
 
-        $response->assertStatus(201);
+        $response
+            ->assertStatus(201)
+            ->assertJson(
+                [
+                    'field' => 'value',
+                ]
+            );
     }
 
     public function tearDown(): void
