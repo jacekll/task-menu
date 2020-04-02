@@ -37,17 +37,17 @@ class MenuController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  mixed  $menu
-     * @return \Illuminate\Http\Response
+     * @param mixed $menu
+     * @return JsonResponse
      */
     public function show($menu)
     {
-        //
+        $menu = $this->menuRepository->find($menu);
+
+        return new JsonResponse($menu);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  mixed  $menu
      * @return \Illuminate\Http\Response

@@ -12,4 +12,8 @@ class MenuRepository implements MenuRepositoryInterface
         $menu->save();
     }
 
+    public function find(int $id): Menu
+    {
+        return Menu::findOrFail($id);
+    }
 }

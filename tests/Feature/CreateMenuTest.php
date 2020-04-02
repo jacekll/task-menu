@@ -22,9 +22,8 @@ class CreateMenuTest extends TestCase
      */
     public function testCreateMenu()
     {
-        $response = $this->json('POST', '/api/menus', ['field' => 'value']);
-
-        $response
+        $createMenuResponse = $this->getCreateMenuResponse();
+        $createMenuResponse
             ->assertStatus(201)
             ->assertJson(
                 [
@@ -33,9 +32,31 @@ class CreateMenuTest extends TestCase
             );
     }
 
+    public function testGetMenu()
+    {
+        $createMenuResponse = $this->getCreateMenuResponse();
+
+        $menuId = $createMenuResponse->json('id');
+        $getMenuResponse = $this->json('GET', "/api/menus/{$menuId}");
+
+        $getMenuResponse
+            ->assertStatus(200)
+            ->assertJson(
+            [
+                'id'    => $menuId,
+                'field' => 'value',
+            ]
+        );
+    }
+
     public function tearDown(): void
     {
         Artisan::call('migrate:reset');
         parent::tearDown();
+    }
+
+    private function getCreateMenuResponse(): \Illuminate\Foundation\Testing\TestResponse
+    {
+        return $this->json('POST', '/api/menus', ['field' => 'value']);
     }
 }
