@@ -6,14 +6,11 @@ use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\UsesMigrations;
 
 class CreateMenuTest extends TestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-        Artisan::call('migrate');
-    }
+    use UsesMigrations;
 
     /**
      * A basic feature test example.
@@ -32,6 +29,9 @@ class CreateMenuTest extends TestCase
             );
     }
 
+    /**
+     * @depends testCreateMenu
+     */
     public function testGetMenu()
     {
         $createMenuResponse = $this->getCreateMenuResponse();
@@ -47,12 +47,6 @@ class CreateMenuTest extends TestCase
                 'field' => 'value',
             ]
         );
-    }
-
-    public function tearDown(): void
-    {
-        Artisan::call('migrate:reset');
-        parent::tearDown();
     }
 
     private function getCreateMenuResponse(): \Illuminate\Foundation\Testing\TestResponse
