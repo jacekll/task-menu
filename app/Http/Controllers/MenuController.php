@@ -2,19 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Menu;
+use App\Repository\MenuRepositoryInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class MenuController extends Controller
 {
     /**
+     * @var MenuRepositoryInterface
+     */
+    private $menuRepository;
+
+    public function __construct(MenuRepositoryInterface $menuRepository)
+    {
+        $this->menuRepository = $menuRepository;
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return JsonResponse
      */
     public function store(Request $request)
     {
-        //
+        $menu = Menu::create(['field' => $request->field]);
+        $this->menuRepository->store($menu);
+
+        return new JsonResponse($menu->toArray(), Response::HTTP_CREATED);
     }
 
     /**
