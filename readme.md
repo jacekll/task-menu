@@ -1,5 +1,32 @@
 # Menu manager
 
+I've learned some Laravel from scratch along the way :)
+
+The set up is dockerized. I've added and used PHP CS Fixer via PHPStorm.
+
+## Running
+
+Install with:
+
+	docker-compose up -d 
+	docker exec -it -u $(id -u):$(id -g) bash
+
+The web server is available on localhost:1025
+Running tests inside the container:
+
+    composer install
+    ./vendor/bin/phpunit
+
+I would use a nested set tree implementation for the menu items (either https://github.com/lazychaser/laravel-nestedset or https://github.com/AdrianSkierniewski/eloquent-tree )
+- because it is fast when retrieving the menu and can get the whole tree in one query
+
+Instead of /items resource maybe I would make it /menus/{menu}/items and /menu/{menu}/items/{item}
+(With the assumption that an item always belongs to a menu).
+
+Next steps would be to implement input validation (maybe with JSON schema  https://github.com/justinrainbow/json-schema instead of Laravel's built-in validators, the syntax is even easier and the library seems more powerful), 
+and of course the rest of the endpoints.
+
+
 ## Table of Contents
 - [How to submit the task](#how-to-submit-the-task)
 - [Task description](#task-description)
